@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 public class PlayerMovement : MonoBehaviour
 {
 	private CharacterController cc;
+	private Animator ac;
 	private Vector3 moveVec, gravity;
 
 	public float Speed = 5;
@@ -19,9 +20,16 @@ public class PlayerMovement : MonoBehaviour
 
 	private bool isRolling = false;
 
+	private Vector3 ccCenterNorm = new Vector3(0, 0, 0),
+					ccCenterRoll = new Vector3(0, -60f, 0);
+
+	private float	ccHeightNorm = 170f,
+					ccHeightRoll = 50f;
+
 	void Start ()
 	{
 		cc = GetComponent<CharacterController>();
+		ac = GetComponent<Animator>();
 		moveVec = new Vector3(1, 0, 0);
 		gravity = Vector3.zero;
 	}
@@ -36,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
 			{
 				if (Input.GetAxisRaw("Vertical") > 0)
 				{
+					ac.SetTrigger("jumping");
 					gravity.y = JumpSpeed;
 				}
 				else if (Input.GetAxisRaw("Vertical") < 0)
@@ -83,12 +92,15 @@ public class PlayerMovement : MonoBehaviour
 
 	IEnumerator DoRoll()
 	{
-		Debug.Log("rolling");
 		isRolling = true;
+		ac.SetBool("rolling", true);
+		cc.center = ccCenterRoll;
+		cc.height = ccHeightRoll;
 		
 		yield return new WaitForSeconds(1.5f);
-		
 		isRolling = false;
-		Debug.Log("not rolling");
+		ac.SetBool("rolling", false);
+		cc.center = ccCenterNorm;
+		cc.height = ccHeightNorm;
 	}
 }
