@@ -8,6 +8,9 @@ public class PlayerMovement : MonoBehaviour
 	private Animator ac;
 	private Vector3 moveVec, gravity;
 
+	public GameManager GM;
+	public bool CanPlay;
+
 	public float Speed = 5;
 	public float JumpSpeed = 12;
 
@@ -24,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 					ccCenterRoll = new Vector3(0, -60f, 0);
 
 	private float	ccHeightNorm = 170f,
-					ccHeightRoll = 50f;
+					ccHeightRoll = 40f;
 
 	void Start ()
 	{
@@ -40,29 +43,40 @@ public class PlayerMovement : MonoBehaviour
 		{
 			gravity = Vector3.zero;
 
-			if (!isRolling)
+
+			if (CanPlay)
 			{
-				if (Input.GetAxisRaw("Vertical") > 0)
+				if (!isRolling)
 				{
-					ac.SetTrigger("jumping");
-					gravity.y = JumpSpeed;
-				}
-				else if (Input.GetAxisRaw("Vertical") < 0)
-				{
-					StartCoroutine(DoRoll());
+					if (Input.GetAxisRaw("Vertical") > 0)
+					{
+						ac.SetTrigger("jumping");
+						gravity.y = JumpSpeed;
+					}
+					else if (Input.GetAxisRaw("Vertical") < 0)
+					{
+						StartCoroutine(DoRoll());
+					}
 				}
 			}
 		}
 		else
 		{
 			gravity += Physics.gravity * Time.deltaTime * 3;
+
+			if (cc.velocity.y < 0)
+			{
+				ac.SetTrigger("falling");
+			}
 		}
+
+		if (CanPlay)
+			moveVec.x = Speed;
 		
-		moveVec.x = Speed;
 		moveVec += gravity;
 		moveVec *= Time.deltaTime;
 
-		ChackInput();
+		CheckInput();
 
 		Vector3 newPos = transform.position;
 		newPos.z = Mathf.Lerp(newPos.z, FirstLanePos + (laneNumber * LaneDistance), Time.deltaTime * SideSpeed);
@@ -71,9 +85,14 @@ public class PlayerMovement : MonoBehaviour
 		cc.Move(moveVec);
 	}
 
-	void ChackInput()
+	void CheckInput()
 	{
 		int sign = 0;
+		
+		if (!CanPlay || isRolling)
+		{
+			return;
+		}
 
 		if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
 		{
@@ -102,5 +121,22 @@ public class PlayerMovement : MonoBehaviour
 		ac.SetBool("rolling", false);
 		cc.center = ccCenterNorm;
 		cc.height = ccHeightNorm;
+	}
+
+	private void OnControllerColliderHit(ControllerColliderHit hit)
+	{
+		if (!hit.gameObject.CompareTag("Trap"))
+			return;
+
+		StartCoroutine(Death());
+	}
+
+	IEnumerator Death()
+	{
+		CanPlay = false;
+		
+		yield return new WaitForSeconds(2);
+		
+		GM.ShowResult();
 	}
 }

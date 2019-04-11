@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f8fd9259a8e05435a93e9a7f5a32d376
+guid: 2b3f858f8d8d54af491f31738d785d0a
 timeCreated: 1554981052
 licenseType: Free
 ModelImporter:
@@ -121,8 +121,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Jumping
       takeName: mixamo.com
-      firstFrame: 64
-      lastFrame: 119
+      firstFrame: 93
+      lastFrame: 120
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -1289,7 +1289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dfb8e4b0728448d097a635033a78ac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 7
+  GM: {fileID: 0}
+  CanPlay: 1
+  Speed: 8
   JumpSpeed: 12
   FirstLanePos: 1.5
   LaneDistance: -1.5
