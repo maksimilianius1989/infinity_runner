@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 public class PlayerMovement : MonoBehaviour
 {
 	private CharacterController cc;
-	private Animator ac;
+	public Animator ac;
 	private Vector3 moveVec, gravity;
 
 	public GameManager GM;
@@ -125,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private void OnControllerColliderHit(ControllerColliderHit hit)
 	{
-		if (!hit.gameObject.CompareTag("Trap"))
+		if (!hit.gameObject.CompareTag("Trap") || !CanPlay)
 			return;
 
 		StartCoroutine(Death());
@@ -135,7 +135,11 @@ public class PlayerMovement : MonoBehaviour
 	{
 		CanPlay = false;
 		
+		ac.SetTrigger("death");
+		
 		yield return new WaitForSeconds(2);
+		
+		ac.SetTrigger("respawn");
 		
 		GM.ShowResult();
 	}
