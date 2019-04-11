@@ -21,6 +21,8 @@ public class RoadSpawner : MonoBehaviour
 		blockXPos = StartBlock.transform.position.x;
 		blockLength = StartBlock.GetComponent<BoxCollider>().bounds.size.x;
 
+		CurrentBlocks.Add(StartBlock);
+		
 		for (int i = 0; i < blocksCount; i++)
 		{
 			SpawnBlock();

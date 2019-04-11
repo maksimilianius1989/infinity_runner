@@ -1,11 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
 	private CharacterController cc;
 	private Vector3 moveVec, gravity;
 
-	private float speed = 5, jumpSpeed = 12;
+	public float Speed = 5;
+	public float JumpSpeed = 12;
 
 	private int laneNumber = 1,
 				lanesCount = 2;
@@ -14,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
 					LaneDistance,
 					SideSpeed;
 
-	private bool didChangeLastFrame = false;
+	private bool isRolling = false;
 
 	void Start ()
 	{
@@ -29,9 +32,16 @@ public class PlayerMovement : MonoBehaviour
 		{
 			gravity = Vector3.zero;
 
-			if (Input.GetAxisRaw("Vertical") > 0)
+			if (!isRolling)
 			{
-				gravity.y = jumpSpeed;
+				if (Input.GetAxisRaw("Vertical") > 0)
+				{
+					gravity.y = JumpSpeed;
+				}
+				else if (Input.GetAxisRaw("Vertical") < 0)
+				{
+					StartCoroutine(DoRoll());
+				}
 			}
 		}
 		else
@@ -39,31 +49,46 @@ public class PlayerMovement : MonoBehaviour
 			gravity += Physics.gravity * Time.deltaTime * 3;
 		}
 		
-		moveVec.x = speed;
+		moveVec.x = Speed;
 		moveVec += gravity;
 		moveVec *= Time.deltaTime;
 
-		float input = Input.GetAxis("Horizontal");
-
-		if (Mathf.Abs(input) > .1f)
-		{
-			if (!didChangeLastFrame)
-			{
-				didChangeLastFrame = true;
-				laneNumber += (int) Mathf.Sign(input);
-				laneNumber = Mathf.Clamp(laneNumber, 0, lanesCount);
-			}
-
-		}
-		else
-		{
-			didChangeLastFrame = false;
-		}
+		ChackInput();
 
 		Vector3 newPos = transform.position;
 		newPos.z = Mathf.Lerp(newPos.z, FirstLanePos + (laneNumber * LaneDistance), Time.deltaTime * SideSpeed);
 		transform.position = newPos;
 		
 		cc.Move(moveVec);
+	}
+
+	void ChackInput()
+	{
+		int sign = 0;
+
+		if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+		{
+			sign = -1;
+		}
+		else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+		{
+			sign = 1;
+		}
+		else
+			return;
+		
+		laneNumber += sign;
+		laneNumber = Mathf.Clamp(laneNumber, 0, lanesCount);
+	}
+
+	IEnumerator DoRoll()
+	{
+		Debug.Log("rolling");
+		isRolling = true;
+		
+		yield return new WaitForSeconds(1.5f);
+		
+		isRolling = false;
+		Debug.Log("not rolling");
 	}
 }

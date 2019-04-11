@@ -187,7 +187,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 190021741}
   m_LocalRotation: {x: 0.12050972, y: 0.71135175, z: -0.13473494, w: 0.6791926}
-  m_LocalPosition: {x: -3.11, y: 1.78, z: 0.13}
+  m_LocalPosition: {x: -7.29, y: 5.34, z: 0.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -253,6 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dfb8e4b0728448d097a635033a78ac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 5
+  JumpSpeed: 12
   FirstLanePos: 1.5
   LaneDistance: -1.5
   SideSpeed: 5
@@ -316,7 +318,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 326250235}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.43}
+  m_LocalPosition: {x: 0, y: 0.777, z: -0.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -365,6 +367,7 @@ MonoBehaviour:
   RoadBlockPrefabs:
   - {fileID: 1469825203222684, guid: 44390fe1837134fbf98cf3e2b7568fed, type: 2}
   - {fileID: 1329864548147926, guid: 43efa628b6b5541ddb83992c104ddd3a, type: 2}
+  - {fileID: 1737873541147414, guid: fb0e217cb5b044e408d45c4ea046d489, type: 2}
   StartBlock: {fileID: 1398688224}
   PlayerTransf: {fileID: 326250241}
 --- !u!1 &930084592
@@ -441,11 +444,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4378272991330890, guid: 44390fe1837134fbf98cf3e2b7568fed, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 13.41
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4378272991330890, guid: 44390fe1837134fbf98cf3e2b7568fed, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4378272991330890, guid: 44390fe1837134fbf98cf3e2b7568fed, type: 2}
       propertyPath: m_LocalPosition.z
