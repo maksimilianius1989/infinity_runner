@@ -215,6 +215,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\RoadSpawner.cs" />
     <Reference Include="Facebook.Unity.Settings">
       <HintPath>/media/vimax/HDD/Projects/InfinityRunner2/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
     </Reference>
