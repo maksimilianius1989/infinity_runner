@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
 	private bool isRolling = false;
 
 	private Vector3 ccCenterNorm = new Vector3(0, 0, 0),
-					ccCenterRoll = new Vector3(0, -30f, 0);
+					ccCenterRoll = new Vector3(0, -40, 50);
 
 	private float	ccHeightNorm = 170f,
 					ccHeightRoll = 40f;
@@ -33,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
 
 	void Start ()
 	{
-		ac = GetComponent<Animator>();
 		selfCollider = GetComponent<CapsuleCollider>();
 		rb = GetComponent<Rigidbody>();
 
@@ -68,7 +67,9 @@ public class PlayerMovement : MonoBehaviour
 			}
 		}
 		else if (rb.velocity.y < -2)
+		{
 			ac.SetTrigger("falling");
+		}
 		
 		CheckInput();
 
@@ -126,8 +127,8 @@ public class PlayerMovement : MonoBehaviour
 
 	private void OnCollisionEnter(Collision other)
 	{
-		if ((!other.gameObject.CompareTag("Trap") &&
-		     !other.gameObject.CompareTag("DeathPlane")) ||
+		if (!other.gameObject.CompareTag("Trap") &&
+		     !other.gameObject.CompareTag("DeathPlane") ||
 		    !GM.CanPlay)
 			return;
 		
@@ -152,7 +153,6 @@ public class PlayerMovement : MonoBehaviour
 		yield return new WaitForSeconds(2);
 		
 		ac.SetTrigger("respawn");
-		
 		GM.ShowResult();
 	}
 

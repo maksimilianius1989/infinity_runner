@@ -117,6 +117,8 @@ MonoBehaviour:
   Coins: 0
   CanPlay: 1
   MoveSpeed: 8
+  PointsBaseValue: 3
+  PointsMultiplier: 1
 --- !u!124 &124567499783481836
 Behaviour:
   m_ObjectHideFlags: 1
