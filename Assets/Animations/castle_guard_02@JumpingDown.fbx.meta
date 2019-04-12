@@ -121,8 +121,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Jumping
       takeName: mixamo.com
-      firstFrame: 93
-      lastFrame: 120
+      firstFrame: 90
+      lastFrame: 115
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1820793984737626}
+  m_IsPrefabParent: 1
+--- !u!1 &1820793984737626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4193593964433078}
+  - component: {fileID: 114247694850728942}
+  m_Layer: 0
+  m_Name: RoadSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4193593964433078
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820793984737626}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114247694850728942
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1820793984737626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac291ec1f9d946c6891385b1c7001c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RoadBlockPrefabs:
+  - {fileID: 1469825203222684, guid: 44390fe1837134fbf98cf3e2b7568fed, type: 2}
+  - {fileID: 1329864548147926, guid: 43efa628b6b5541ddb83992c104ddd3a, type: 2}
+  - {fileID: 1737873541147414, guid: fb0e217cb5b044e408d45c4ea046d489, type: 2}
+  - {fileID: 1230767158605982, guid: c0e746765a8b5425d8ba416d0f048e0f, type: 2}
+  - {fileID: 1960872504611746, guid: c515b7868569243869a1943a078388a5, type: 2}
+  - {fileID: 1617589898057178, guid: 384b818722dbf415a906f252b480f653, type: 2}
+  StartBlock: {fileID: 1469825203222684, guid: 44390fe1837134fbf98cf3e2b7568fed, type: 2}
+  PlayerTransf: {fileID: 0}

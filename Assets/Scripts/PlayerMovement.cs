@@ -1,17 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
-	private CharacterController cc;
 	public Animator ac;
-	private Vector3 moveVec, gravity;
 
 	public GameManager GM;
-	public bool CanPlay;
+	private CapsuleCollider selfCollider;
+	private Rigidbody rb;
 
-	public float Speed = 5;
 	public float JumpSpeed = 12;
 
 	private int laneNumber = 1,
@@ -24,72 +22,71 @@ public class PlayerMovement : MonoBehaviour
 	private bool isRolling = false;
 
 	private Vector3 ccCenterNorm = new Vector3(0, 0, 0),
-					ccCenterRoll = new Vector3(0, -60f, 0);
+					ccCenterRoll = new Vector3(0, -30f, 0);
 
 	private float	ccHeightNorm = 170f,
 					ccHeightRoll = 40f;
 
+	private bool wannaJump = false;
+
+	private Vector3 startPosition;
+
 	void Start ()
 	{
-		cc = GetComponent<CharacterController>();
 		ac = GetComponent<Animator>();
-		moveVec = new Vector3(1, 0, 0);
-		gravity = Vector3.zero;
+		selfCollider = GetComponent<CapsuleCollider>();
+		rb = GetComponent<Rigidbody>();
+
+		startPosition = transform.position;
+	}
+
+	private void FixedUpdate()
+	{
+		rb.AddForce(new Vector3(0, Physics.gravity.y * 4, 0), ForceMode.Acceleration);
+
+		if (wannaJump && isGrounded())
+		{
+			ac.SetTrigger("jumping");
+			rb.AddForce(new Vector3(0, JumpSpeed, 0), ForceMode.Impulse);
+			wannaJump = false;
+		}
 	}
 
 	void Update ()
 	{
-		if (cc.isGrounded)
+		if (isGrounded())
 		{
-			gravity = Vector3.zero;
-
-
-			if (CanPlay)
+			if (GM.CanPlay)
 			{
 				if (!isRolling)
 				{
 					if (Input.GetAxisRaw("Vertical") > 0)
-					{
-						ac.SetTrigger("jumping");
-						gravity.y = JumpSpeed;
-					}
+						wannaJump = true;
 					else if (Input.GetAxisRaw("Vertical") < 0)
-					{
 						StartCoroutine(DoRoll());
-					}
 				}
 			}
 		}
-		else
-		{
-			gravity += Physics.gravity * Time.deltaTime * 3;
-
-			if (cc.velocity.y < 0)
-			{
-				ac.SetTrigger("falling");
-			}
-		}
-
-		if (CanPlay)
-			moveVec.x = Speed;
+		else if (rb.velocity.y < -2)
+			ac.SetTrigger("falling");
 		
-		moveVec += gravity;
-		moveVec *= Time.deltaTime;
-
 		CheckInput();
 
 		Vector3 newPos = transform.position;
 		newPos.z = Mathf.Lerp(newPos.z, FirstLanePos + (laneNumber * LaneDistance), Time.deltaTime * SideSpeed);
 		transform.position = newPos;
-		
-		cc.Move(moveVec);
+	}
+
+	bool isGrounded()
+	{
+		return Physics.Raycast(transform.position, Vector3.down, 1.02f);
 	}
 
 	void CheckInput()
 	{
 		int sign = 0;
 		
-		if (!CanPlay || isRolling)
+		if (!GM.CanPlay || isRolling)
 		{
 			return;
 		}
@@ -113,27 +110,42 @@ public class PlayerMovement : MonoBehaviour
 	{
 		isRolling = true;
 		ac.SetBool("rolling", true);
-		cc.center = ccCenterRoll;
-		cc.height = ccHeightRoll;
+		selfCollider.center = ccCenterRoll;
+		selfCollider.height = ccHeightRoll;
 		
 		yield return new WaitForSeconds(1.5f);
-		isRolling = false;
+		
 		ac.SetBool("rolling", false);
-		cc.center = ccCenterNorm;
-		cc.height = ccHeightNorm;
+		selfCollider.center = ccCenterNorm;
+		selfCollider.height = ccHeightNorm;
+		
+		yield return new WaitForSeconds(0.3f);
+		
+		isRolling = false;
 	}
 
-	private void OnControllerColliderHit(ControllerColliderHit hit)
+	private void OnCollisionEnter(Collision other)
 	{
-		if (!hit.gameObject.CompareTag("Trap") || !CanPlay)
+		if ((!other.gameObject.CompareTag("Trap") &&
+		     !other.gameObject.CompareTag("DeathPlane")) ||
+		    !GM.CanPlay)
 			return;
-
+		
 		StartCoroutine(Death());
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (!other.CompareTag("Coin"))
+			return;
+		
+		GM.AddCoins(1);
+		Destroy(other.gameObject);
 	}
 
 	IEnumerator Death()
 	{
-		CanPlay = false;
+		GM.CanPlay = false;
 		
 		ac.SetTrigger("death");
 		
@@ -142,5 +154,11 @@ public class PlayerMovement : MonoBehaviour
 		ac.SetTrigger("respawn");
 		
 		GM.ShowResult();
+	}
+
+	public void ResetPosition()
+	{
+		transform.position = startPosition;
+		laneNumber = 1;
 	}
 }

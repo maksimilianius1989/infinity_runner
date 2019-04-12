@@ -9,14 +9,21 @@ public class GameManager : MonoBehaviour
     public PlayerMovement PM;
     public RoadSpawner RS;
 
-    public Text PointsTxt;
+    public Text PointsTxt,
+                CoinsTxt;
     private float Points;
+
+    public int Coins = 0;
+
+    public bool CanPlay = true;
+
+    public float MoveSpeed;
 
     public void StartGame()
     {
         ResultObj.SetActive(false);
         RS.StartGame();
-        PM.CanPlay = true;
+        CanPlay = true;
         PM.ac.SetTrigger("respawn");
 
         Points = 0;
@@ -24,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (PM.CanPlay)
+        if (CanPlay)
             Points += Time.deltaTime * 3;
 
         PointsTxt.text = ((int) Points).ToString();
@@ -33,5 +40,11 @@ public class GameManager : MonoBehaviour
     public void ShowResult()
     {
         ResultObj.SetActive(true);
+    }
+
+    public void AddCoins(int number)
+    {
+        Coins += number;
+        CoinsTxt.text = Coins.ToString();
     }
 }

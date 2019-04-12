@@ -112,6 +112,11 @@ MonoBehaviour:
   ResultObj: {fileID: 0}
   PM: {fileID: 0}
   RS: {fileID: 0}
+  PointsTxt: {fileID: 0}
+  CoinsTxt: {fileID: 0}
+  Coins: 0
+  CanPlay: 1
+  MoveSpeed: 8
 --- !u!124 &124567499783481836
 Behaviour:
   m_ObjectHideFlags: 1

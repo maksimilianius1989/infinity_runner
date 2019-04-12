@@ -9,6 +9,7 @@
         <e p="CameraMovement.cs" t="Include" />
         <e p="GameManager.cs" t="Include" />
         <e p="PlayerMovement.cs" t="Include" />
+        <e p="RoadBlock.cs" t="Include" />
         <e p="RoadSpawner.cs" t="Include" />
       </e>
       <e p="InfinityRunner2.sln" t="IncludeFlat" />

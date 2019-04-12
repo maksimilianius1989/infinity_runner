@@ -7,8 +7,7 @@ public class RoadSpawner : MonoBehaviour
 	public GameObject[] RoadBlockPrefabs;
 	public GameObject StartBlock;
 
-	private float	startBlockXPos = 0,
-					currentBlockXPos = 0;
+	private float startBlockXPos;
 	private int blocksCount = 7;
 	private float blockLength = 0;
 	private int safeZone = 50;
@@ -21,18 +20,16 @@ public class RoadSpawner : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		startBlockXPos = StartBlock.transform.position.x;
-		blockLength = StartBlock.GetComponent<BoxCollider>().bounds.size.x;
-		startPlayerPos = PlayerTransf.position;
+		startBlockXPos = PlayerTransf.position.x + 5;
+		blockLength = 30;
 		
 		StartGame();
 	}
 
 	public void StartGame()
 	{
-		currentBlockXPos = startBlockXPos;
-		PlayerTransf.position = startPlayerPos;
-
+		PlayerTransf.GetComponent<PlayerMovement>().ResetPosition();
+		
 		foreach (var go in CurrentBlocks)
 			Destroy(go);
 		
@@ -43,13 +40,13 @@ public class RoadSpawner : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 		CheckForSpawn();
 	}
 
 	void CheckForSpawn()
 	{
-		if (PlayerTransf.position.x - safeZone > (currentBlockXPos - blocksCount * blockLength))
+		if (CurrentBlocks[0].transform.position.x - PlayerTransf.position.x < -35)
 		{
 			SpawnBlock();
 			DestroyBlock();
@@ -59,10 +56,14 @@ public class RoadSpawner : MonoBehaviour
 	void SpawnBlock()
 	{
 		GameObject block = Instantiate(RoadBlockPrefabs[Random.Range(0, RoadBlockPrefabs.Length)], transform);
+		Vector3 blockPos;
+
+		if (CurrentBlocks.Count > 0)
+			blockPos = CurrentBlocks[CurrentBlocks.Count - 1].transform.position + new Vector3(blockLength, 0, 0);
+		else
+			blockPos = new Vector3(startBlockXPos, 0, 0);
 		
-		currentBlockXPos += blockLength;
-		
-		block.transform.position = new Vector3(currentBlockXPos, 0, 0);
+		block.transform.position = blockPos;
 		
 		CurrentBlocks.Add(block);
 	}
