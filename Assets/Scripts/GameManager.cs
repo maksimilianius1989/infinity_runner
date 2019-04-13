@@ -1,20 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public PauseMenuController PMC;
     public GameObject ResultObj;
     public PlayerMovement PM;
     public RoadSpawner RS;
 
     public Text PointsTxt,
-                CoinsTxt;
+        CoinsTxt;
+
     private float Points;
 
     public int Coins = 0;
 
     public bool CanPlay = true;
+    public bool IsSound = true;
 
     public float BaseMoveSpeed, CurrentMoveSpeed;
     public float PointsBaseValue, PointsMultiplier, PowerUpMultiplier;
@@ -23,6 +27,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        PM.Respawn();
         ResultObj.SetActive(false);
         RS.StartGame();
         CanPlay = true;
@@ -34,10 +39,19 @@ public class GameManager : MonoBehaviour
         Points = 0;
     }
 
+    IEnumerator FixTrigger()
+    {
+        yield return null; 
+        PM.SkinAnimator.ResetTrigger("respawn");
+    }
+
     private void Update()
     {
         if (CanPlay)
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                PMC.Pause();
+            
             Points += PointsBaseValue * PointsMultiplier * PowerUpMultiplier * Time.deltaTime;
             PointsMultiplier += .05f * Time.deltaTime;
             PointsMultiplier = Mathf.Clamp(PointsMultiplier, 1, 10);

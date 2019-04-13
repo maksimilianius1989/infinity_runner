@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
 	private bool wannaJump = false;
 
 	private Vector3 startPosition;
+	private Vector3 rbVelocity;
 
 	void Start ()
 	{
@@ -45,6 +46,29 @@ public class PlayerMovement : MonoBehaviour
 
 		startPosition = transform.position;
 		SwipeController.SwipeEvent += CheckInput;
+	}
+
+	public void Respawn()
+	{
+		StopAllCoroutines();
+		isImmortal = false;
+		isRolling = false;
+		wannaJump = false;
+		StopRolling();
+	}
+	
+	public void Pause()
+	{
+		rbVelocity = rb.velocity;
+		rb.isKinematic = true;
+		SkinAnimator.speed = 0;
+	}
+
+	public void UnPause()
+	{
+		rb.isKinematic = false;
+		rb.velocity = rbVelocity;
+		SkinAnimator.speed = 1;
 	}
 
 	private void FixedUpdate()
@@ -104,20 +128,40 @@ public class PlayerMovement : MonoBehaviour
 		return Physics.Raycast(transform.position, Vector3.down, 1.02f);
 	}
 
+	void StopRolling()
+	{
+		SkinAnimator.SetBool("rolling", false);
+		selfCollider.center = ccCenterNorm;
+		selfCollider.height = ccHeightNorm;
+	}
+
 	IEnumerator DoRoll()
 	{
+		float rollDuration = 1.5f;
+		float cdDuration = .3f;
+		
 		isRolling = true;
 		SkinAnimator.SetBool("rolling", true);
 		selfCollider.center = ccCenterRoll;
 		selfCollider.height = ccHeightRoll;
+
+		while (rollDuration > 0)
+		{
+			if (GM.CanPlay)
+				rollDuration -= Time.deltaTime;
+
+			yield return null;
+		}
 		
-		yield return new WaitForSeconds(1.5f);
-		
-		SkinAnimator.SetBool("rolling", false);
-		selfCollider.center = ccCenterNorm;
-		selfCollider.height = ccHeightNorm;
-		
-		yield return new WaitForSeconds(0.3f);
+		StopRolling();
+
+		while (cdDuration > 0)
+		{
+			if (GM.CanPlay)
+				cdDuration -= Time.deltaTime;
+
+			yield return null;
+		}
 		
 		isRolling = false;
 	}

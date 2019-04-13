@@ -89,6 +89,11 @@ public class PowerUpController : MonoBehaviour
 	{
 		for (int i = 0; i < powerUps.Length; i++)
 			PowerUpReset(powerUps[i].PowerUpType);
+
+		foreach (var pu in powerups)
+			pu.Destroy();
+		
+		powerups.Clear();
 	}
 	
 	IEnumerator PowerUpCor(PowerUp.Type type, PowerUpScr powerupPref)
@@ -99,8 +104,10 @@ public class PowerUpController : MonoBehaviour
 		while (currDuration > 0)
 		{
 			powerupPref.SetProgress(currDuration / duration);
+
+			if (GM.CanPlay)
+				currDuration -= Time.deltaTime;
 			
-			currDuration -= Time.deltaTime;
 			yield return null;
 		}
 
