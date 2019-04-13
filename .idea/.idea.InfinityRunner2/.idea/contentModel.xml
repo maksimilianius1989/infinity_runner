@@ -11,6 +11,10 @@
         <e p="PlayerMovement.cs" t="Include" />
         <e p="RoadBlock.cs" t="Include" />
         <e p="RoadSpawner.cs" t="Include" />
+        <e p="SaveManager.cs" t="Include" />
+        <e p="ShopItem.cs" t="Include" />
+        <e p="ShopManager.cs" t="Include" />
+        <e p="Skin.cs" t="Include" />
       </e>
       <e p="InfinityRunner2.sln" t="IncludeFlat" />
       <e p="Library" t="ExcludeRecursive" />

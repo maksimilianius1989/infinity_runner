@@ -20,12 +20,14 @@ public class GameManager : MonoBehaviour
     public float MoveSpeed;
     public float PointsBaseValue, PointsMultiplier;
 
+    public List<Skin> Skins;
+
     public void StartGame()
     {
         ResultObj.SetActive(false);
         RS.StartGame();
         CanPlay = true;
-        PM.ac.SetTrigger("respawn");
+        PM.SkinAnimator.SetTrigger("respawn");
 
         Points = 0;
     }
@@ -48,11 +50,26 @@ public class GameManager : MonoBehaviour
     public void ShowResult()
     {
         ResultObj.SetActive(true);
+        SaveManager.Instance.SaveGame();
     }
 
     public void AddCoins(int number)
     {
         Coins += number;
+        RefreshText();
+    }
+
+    public void RefreshText()
+    {
         CoinsTxt.text = Coins.ToString();
+    }
+
+    public void ActivateSkin(int skinIndex)
+    {
+        foreach (Skin skin in Skins)
+            skin.HideSkin();
+        
+        Skins[skinIndex].ShowSkin();
+        PM.SkinAnimator = Skins[skinIndex].AC;
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
-	public Animator ac;
+	public Animator SkinAnimator;
 
 	public GameManager GM;
 	private CapsuleCollider selfCollider;
@@ -45,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
 		if (wannaJump && isGrounded())
 		{
-			ac.SetTrigger("jumping");
+			SkinAnimator.SetTrigger("jumping");
 			rb.AddForce(new Vector3(0, JumpSpeed, 0), ForceMode.Impulse);
 			wannaJump = false;
 		}
@@ -68,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 		else if (rb.velocity.y < -2)
 		{
-			ac.SetBool("falling", true);
+			SkinAnimator.SetBool("falling", true);
 		}
 		
 		CheckInput();
@@ -110,13 +111,13 @@ public class PlayerMovement : MonoBehaviour
 	IEnumerator DoRoll()
 	{
 		isRolling = true;
-		ac.SetBool("rolling", true);
+		SkinAnimator.SetBool("rolling", true);
 		selfCollider.center = ccCenterRoll;
 		selfCollider.height = ccHeightRoll;
 		
 		yield return new WaitForSeconds(1.5f);
 		
-		ac.SetBool("rolling", false);
+		SkinAnimator.SetBool("rolling", false);
 		selfCollider.center = ccCenterNorm;
 		selfCollider.height = ccHeightNorm;
 		
@@ -148,11 +149,11 @@ public class PlayerMovement : MonoBehaviour
 	{
 		GM.CanPlay = false;
 		
-		ac.SetTrigger("death");
+		SkinAnimator.SetTrigger("death");
 		
 		yield return new WaitForSeconds(2);
 		
-		ac.SetTrigger("respawn");
+		SkinAnimator.SetTrigger("respawn");
 		GM.ShowResult();
 	}
 
