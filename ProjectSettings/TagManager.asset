@@ -7,6 +7,9 @@ TagManager:
   - Trap
   - DeathPlane
   - Coin
+  - CoinsSpawnPU
+  - ImmortalPU
+  - MultiPU
   layers:
   - Default
   - TransparentFX

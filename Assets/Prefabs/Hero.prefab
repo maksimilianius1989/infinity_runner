@@ -700,6 +700,7 @@ GameObject:
   - component: {fileID: 114374680065632078}
   - component: {fileID: 54790314614789034}
   - component: {fileID: 136308314524351158}
+  - component: {fileID: 114895300658394796}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -1181,13 +1182,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4134298058344072}
   - component: {fileID: 95036483600705406}
+  - component: {fileID: 114329673347848396}
   m_Layer: 0
   m_Name: Skin 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1765785436117996
 GameObject:
   m_ObjectHideFlags: 1
@@ -1302,13 +1304,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4901622335616222}
   - component: {fileID: 95338097247784494}
+  - component: {fileID: 114178394392771842}
   m_Layer: 0
   m_Name: Skin 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1831587548497218
 GameObject:
   m_ObjectHideFlags: 1
@@ -3083,6 +3086,30 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114178394392771842
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1827247031411204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a341e471c85a146f7ba01dd2561e9441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AC: {fileID: 95338097247784494}
+--- !u!114 &114329673347848396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1762953817832160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a341e471c85a146f7ba01dd2561e9441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AC: {fileID: 95036483600705406}
 --- !u!114 &114374680065632078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3094,12 +3121,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dfb8e4b0728448d097a635033a78ac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ac: {fileID: 95338097247784494}
+  SkinAnimator: {fileID: 95036483600705406}
   GM: {fileID: 0}
   JumpSpeed: 12
   FirstLanePos: 1.5
   LaneDistance: -1.5
   SideSpeed: 5
+--- !u!114 &114895300658394796
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1459708023971616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc7c3958245fa4adc9c7f2b397102557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GM: {fileID: 0}
 --- !u!136 &136308314524351158
 CapsuleCollider:
   m_ObjectHideFlags: 1

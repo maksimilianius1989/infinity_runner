@@ -5,11 +5,16 @@ using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
+	public PowerUpController PUController;
 	public Animator SkinAnimator;
 
 	public GameManager GM;
 	private CapsuleCollider selfCollider;
 	private Rigidbody rb;
+
+	public delegate void OnPowerUpUse(PowerUpController.PowerUp.Type type);
+
+	public static event OnPowerUpUse PowerUpUseEvent;
 
 	public float JumpSpeed = 12;
 
@@ -21,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 					SideSpeed;
 
 	private bool isRolling = false;
+	private bool isImmortal = false;
 
 	private Vector3 ccCenterNorm = new Vector3(0, 0, 0),
 					ccCenterRoll = new Vector3(0, -40, 50);
@@ -122,22 +128,42 @@ public class PlayerMovement : MonoBehaviour
 		     !other.gameObject.CompareTag("DeathPlane") ||
 		    !GM.CanPlay)
 			return;
+
+		if (isImmortal && !other.gameObject.CompareTag("DeathPlane"))
+		{
+			other.collider.isTrigger = true;
+			return;
+		}
 		
 		StartCoroutine(Death());
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (!other.CompareTag("Coin"))
-			return;
+		switch (other.tag)
+		{
+			case "Coin":
+				GM.AddCoins(1);
+				break;
+			case "CoinsSpawnPU":
+				PowerUpUseEvent(PowerUpController.PowerUp.Type.MULTIPLIER);
+				break;
+			case "ImmortalPU":
+				PowerUpUseEvent(PowerUpController.PowerUp.Type.IMMORTALITY);
+				break;
+			case "MultiPU":
+				PowerUpUseEvent(PowerUpController.PowerUp.Type.COINS_SPAWN);
+				break;
+			default: return;
+		}
 		
-		GM.AddCoins(1);
 		Destroy(other.gameObject);
 	}
 
 	IEnumerator Death()
 	{
 		GM.CanPlay = false;
+		PUController.ResetAllPowerUps();
 		
 		SkinAnimator.SetTrigger("death");
 		
@@ -151,5 +177,15 @@ public class PlayerMovement : MonoBehaviour
 	{
 		transform.position = startPosition;
 		laneNumber = 1;
+	}
+
+	public void ImmortalityOn()
+	{
+		isImmortal = true;
+	}
+
+	public void immortalityOff()
+	{
+		isImmortal = false;
 	}
 }

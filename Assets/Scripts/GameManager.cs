@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public bool CanPlay = true;
 
     public float BaseMoveSpeed, CurrentMoveSpeed;
-    public float PointsBaseValue, PointsMultiplier;
+    public float PointsBaseValue, PointsMultiplier, PowerUpMultiplier;
 
     public List<Skin> Skins;
 
@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 
         CurrentMoveSpeed = BaseMoveSpeed;
         PointsMultiplier = 1;
+        PowerUpMultiplier = 1;
         Points = 0;
     }
 
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour
     {
         if (CanPlay)
         {
-            Points += PointsBaseValue * PointsMultiplier *  Time.deltaTime * 3;
+            Points += PointsBaseValue * PointsMultiplier * PowerUpMultiplier * Time.deltaTime;
             PointsMultiplier += .05f * Time.deltaTime;
             PointsMultiplier = Mathf.Clamp(PointsMultiplier, 1, 10);
 

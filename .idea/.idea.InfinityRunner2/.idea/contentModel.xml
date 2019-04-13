@@ -9,6 +9,7 @@
         <e p="CameraMovement.cs" t="Include" />
         <e p="GameManager.cs" t="Include" />
         <e p="PlayerMovement.cs" t="Include" />
+        <e p="PowerUpController.cs" t="Include" />
         <e p="RoadBlock.cs" t="Include" />
         <e p="RoadSpawner.cs" t="Include" />
         <e p="SaveManager.cs" t="Include" />

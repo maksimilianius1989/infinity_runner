@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 81393417684589130}
   - component: {fileID: 114292585803091848}
   - component: {fileID: 114778155341880484}
+  - component: {fileID: 114154824031290946}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -52,8 +53,8 @@ Camera:
   m_GameObject: {fileID: 1180783517538324}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -86,6 +87,19 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1180783517538324}
   m_Enabled: 1
+--- !u!114 &114154824031290946
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1180783517538324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4897bc3b0f12b42e986324f42378a177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SM: {fileID: 0}
+  GM: {fileID: 114778155341880484}
 --- !u!114 &114292585803091848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -114,11 +128,16 @@ MonoBehaviour:
   RS: {fileID: 0}
   PointsTxt: {fileID: 0}
   CoinsTxt: {fileID: 0}
-  Coins: 0
+  Coins: 9
   CanPlay: 1
-  MoveSpeed: 8
+  BaseMoveSpeed: 7
+  CurrentMoveSpeed: 7
   PointsBaseValue: 3
   PointsMultiplier: 1
+  PowerUpMultiplier: 1
+  Skins:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!124 &124567499783481836
 Behaviour:
   m_ObjectHideFlags: 1
