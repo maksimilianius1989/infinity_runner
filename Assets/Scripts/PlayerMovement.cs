@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 		else if (rb.velocity.y < -2)
 		{
-			ac.SetTrigger("falling");
+			ac.SetBool("falling", true);
 		}
 		
 		CheckInput();
