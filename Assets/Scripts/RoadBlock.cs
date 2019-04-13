@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RoadBlock : MonoBehaviour
 {
@@ -23,6 +21,6 @@ public class RoadBlock : MonoBehaviour
 	void LateUpdate ()
 	{
 		if (GM.CanPlay)
-			transform.Translate(moveVec * Time.deltaTime * GM.MoveSpeed);
+			transform.Translate(moveVec * Time.deltaTime * GM.CurrentMoveSpeed);
 	}
 }

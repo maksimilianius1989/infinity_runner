@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 
 		startPosition = transform.position;
+		SwipeController.SwipeEvent += CheckInput;
 	}
 
 	private void FixedUpdate()
@@ -54,38 +55,26 @@ public class PlayerMovement : MonoBehaviour
 
 	void Update ()
 	{
-		if (isGrounded())
-		{
-			if (GM.CanPlay)
-			{
-				if (!isRolling)
-				{
-					if (Input.GetAxisRaw("Vertical") > 0)
-						wannaJump = true;
-					else if (Input.GetAxisRaw("Vertical") < 0)
-						StartCoroutine(DoRoll());
-				}
-			}
-		}
-		else if (rb.velocity.y < -2)
+		if (rb.velocity.y < -2)
 		{
 			SkinAnimator.SetBool("falling", true);
 		}
-		
-		CheckInput();
 
 		Vector3 newPos = transform.position;
 		newPos.z = Mathf.Lerp(newPos.z, FirstLanePos + (laneNumber * LaneDistance), Time.deltaTime * SideSpeed);
 		transform.position = newPos;
 	}
 
-	bool isGrounded()
+	void CheckInput(SwipeController.SwipeType type)
 	{
-		return Physics.Raycast(transform.position, Vector3.down, 1.02f);
-	}
-
-	void CheckInput()
-	{
+		if (isGrounded() && GM.CanPlay && !isRolling)
+		{
+			if (type == SwipeController.SwipeType.UP)
+				wannaJump = true;
+			else if (type == SwipeController.SwipeType.DOWN)
+				StartCoroutine(DoRoll());
+		}
+		
 		int sign = 0;
 		
 		if (!GM.CanPlay || isRolling)
@@ -93,19 +82,20 @@ public class PlayerMovement : MonoBehaviour
 			return;
 		}
 
-		if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-		{
+		if (type == SwipeController.SwipeType.LEFT)
 			sign = -1;
-		}
-		else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-		{
+		else if (type == SwipeController.SwipeType.RIGHT)
 			sign = 1;
-		}
 		else
 			return;
 		
 		laneNumber += sign;
 		laneNumber = Mathf.Clamp(laneNumber, 0, lanesCount);
+	}
+	
+	bool isGrounded()
+	{
+		return Physics.Raycast(transform.position, Vector3.down, 1.02f);
 	}
 
 	IEnumerator DoRoll()

@@ -15,6 +15,7 @@
         <e p="ShopItem.cs" t="Include" />
         <e p="ShopManager.cs" t="Include" />
         <e p="Skin.cs" t="Include" />
+        <e p="SwipeController.cs" t="Include" />
       </e>
       <e p="InfinityRunner2.sln" t="IncludeFlat" />
       <e p="Library" t="ExcludeRecursive" />

@@ -222,6 +222,7 @@
     <Compile Include="Assets\Scripts\ShopItem.cs" />
     <Compile Include="Assets\Scripts\ShopManager.cs" />
     <Compile Include="Assets\Scripts\Skin.cs" />
+    <Compile Include="Assets\Scripts\SwipeController.cs" />
     <Reference Include="Facebook.Unity.Settings">
       <HintPath>/media/vimax/HDD/Projects/InfinityRunner2/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
     </Reference>

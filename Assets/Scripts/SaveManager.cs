@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using NUnit.Framework;
-using NUnit.Framework.Constraints;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class SaveManager : MonoBehaviour
 {
