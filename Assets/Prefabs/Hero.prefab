@@ -3121,6 +3121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dfb8e4b0728448d097a635033a78ac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PUController: {fileID: 114895300658394796}
   SkinAnimator: {fileID: 95036483600705406}
   GM: {fileID: 0}
   JumpSpeed: 12
@@ -3139,6 +3140,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GM: {fileID: 0}
+  PM: {fileID: 114374680065632078}
+  PowerUpPref: {fileID: 1874274006369076, guid: be240359bb22d474ea801fb9ca096f5e,
+    type: 2}
+  PowerUpGrid: {fileID: 0}
 --- !u!136 &136308314524351158
 CapsuleCollider:
   m_ObjectHideFlags: 1

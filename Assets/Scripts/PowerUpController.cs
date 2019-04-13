@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class PowerUpController : MonoBehaviour
@@ -26,6 +27,10 @@ public class PowerUpController : MonoBehaviour
 
 	public GameManager GM;
 	public PlayerMovement PM;
+
+	public GameObject PowerUpPref;
+	public Transform PowerUpGrid;
+	private List<PowerUpScr> powerups = new List<PowerUpScr>();
 	
 	void Start ()
 	{
@@ -39,7 +44,7 @@ public class PowerUpController : MonoBehaviour
 	void PowerUpUse(PowerUp.Type type)
 	{
 		PowerUpReset(type);
-		powerUpsCors[(int) type] = StartCoroutine(PowerUpCor(type));
+		powerUpsCors[(int) type] = StartCoroutine(PowerUpCor(type, createPowerUpPref(type)));
 
 		switch (type)
 		{
@@ -86,16 +91,35 @@ public class PowerUpController : MonoBehaviour
 			PowerUpReset(powerUps[i].PowerUpType);
 	}
 	
-	IEnumerator PowerUpCor(PowerUp.Type type)
+	IEnumerator PowerUpCor(PowerUp.Type type, PowerUpScr powerupPref)
 	{
 		float duration = powerUps[(int) type].Duration;
+		float currDuration = duration;
 
-		while (duration > 0)
+		while (currDuration > 0)
 		{
-			duration -= Time.deltaTime;
+			powerupPref.SetProgress(currDuration / duration);
+			
+			currDuration -= Time.deltaTime;
 			yield return null;
 		}
+
+		powerups.Remove(powerupPref);
+		powerupPref.Destroy();
 		
 		PowerUpReset(type);
+	}
+
+	PowerUpScr createPowerUpPref(PowerUp.Type type)
+	{
+		GameObject go = Instantiate(PowerUpPref, PowerUpGrid, false);
+
+		PowerUpScr p = go.GetComponent<PowerUpScr>();
+		
+		powerups.Add(p);
+		
+		p.SetData(type);
+		
+		return p;
 	}
 }

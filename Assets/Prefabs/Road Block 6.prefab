@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 23005554739901190}
   m_Layer: 0
   m_Name: ImmortalPUPref
-  m_TagString: Coin
+  m_TagString: ImmortalPU
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 23047489474850396}
   m_Layer: 0
   m_Name: CoinsSpawnPUPref
-  m_TagString: Coin
+  m_TagString: CoinsSpawnPU
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 23413949774514590}
   m_Layer: 0
   m_Name: MultiPUPref
-  m_TagString: Coin
+  m_TagString: MultiPU
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

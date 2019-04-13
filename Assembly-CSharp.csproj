@@ -217,6 +217,7 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PowerUpController.cs" />
+    <Compile Include="Assets\Scripts\PowerUpScr.cs" />
     <Compile Include="Assets\Scripts\RoadBlock.cs" />
     <Compile Include="Assets\Scripts\RoadSpawner.cs" />
     <Compile Include="Assets\Scripts\SaveManager.cs" />
