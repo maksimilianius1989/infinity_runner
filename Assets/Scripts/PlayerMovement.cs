@@ -188,6 +188,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			case "Coin":
 				GM.AddCoins(1);
+				AudioManager.Instance.PlayCoinEffect();
 				break;
 			case "CoinsSpawnPU":
 				PowerUpUseEvent(PowerUpController.PowerUp.Type.MULTIPLIER);

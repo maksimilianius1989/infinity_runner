@@ -28,5 +28,6 @@ public class MainMenuController : MonoBehaviour
     {
         GM.IsSound = !GM.IsSound;
         SoundsBtnImg.sprite = GM.IsSound ? SoundsOn : SoundsOff;
+        AudioManager.Instance.RefreshSoundState();
     }
 }

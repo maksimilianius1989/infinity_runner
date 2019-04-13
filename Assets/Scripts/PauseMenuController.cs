@@ -24,6 +24,11 @@ public class PauseMenuController : MonoBehaviour
 
     public void MenuBtn()
     {
+        PM.UnPause();
+        PM.PUController.ResetAllPowerUps();
         
+        gameObject.SetActive(false);
+        
+        MMC.OpenMenu();
     }
 }

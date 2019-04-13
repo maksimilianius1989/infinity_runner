@@ -6,6 +6,7 @@
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets/Scripts" t="Include">
+        <e p="AudioManager.cs" t="Include" />
         <e p="CameraMovement.cs" t="Include" />
         <e p="GameManager.cs" t="Include" />
         <e p="MainMenuController.cs" t="Include" />
